@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
+const path = require("path")
 // const bodyParser = require("body-parser")
 const app = express()
 const Routes = require("./routes/route.js")
@@ -24,7 +25,15 @@ mongoose
     .then(console.log("Connected to MongoDB"))
     .catch((err) => console.log("NOT CONNECTED TO NETWORK", err))
 
-app.use('/', Routes);
+// Mount API routes under /api to avoid clashing with frontend routes
+app.use('/api', Routes);
+
+// Serve frontend build in production
+const buildPath = path.join(__dirname, "../frontend/build")
+app.use(express.static(buildPath))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'))
+})
 
 app.listen(PORT, () => {
     console.log(`Server started at port no. ${PORT}`)

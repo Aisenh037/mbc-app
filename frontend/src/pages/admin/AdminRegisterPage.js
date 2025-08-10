@@ -92,10 +92,9 @@ const AdminRegisterPage = () => {
                             Admin Register
                         </Typography>
                         <Typography variant="h7">
-                            Create your own school by registering as an admin.
+                            Create your department portal (MBC) by registering as an admin.
                             <br />
-                            You will be able to add students and faculty and
-                            manage the system.
+                            Add students and faculty, manage classes, subjects, notices and complaints.
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
                             <TextField
@@ -116,7 +115,7 @@ const AdminRegisterPage = () => {
                                 required
                                 fullWidth
                                 id="schoolName"
-                                label="Create your school name"
+                                label="Department/Institute Name (e.g., MBC - NIT Bhopal)"
                                 name="schoolName"
                                 autoComplete="off"
                                 error={schoolNameError}

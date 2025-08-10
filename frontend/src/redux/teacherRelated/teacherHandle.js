@@ -1,18 +1,13 @@
 import axios from 'axios';
-import {
-    getRequest,
-    getSuccess,
-    getFailed,
-    getError,
-    postDone,
-    doneSuccess
-} from './teacherSlice';
+import { getRequest, getSuccess, getFailed, getError, teacherSuccess } from './teacherSlice';
+
+const apiBase = '/api';
 
 export const getAllTeachers = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/Teachers/${id}`);
+        const result = await axios.get(`${apiBase}/Teachers/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
@@ -23,13 +18,13 @@ export const getAllTeachers = (id) => async (dispatch) => {
     }
 }
 
-export const getTeacherDetails = (id) => async (dispatch) => {
+export const getTeacherDetail = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/Teacher/${id}`);
+        const result = await axios.get(`${apiBase}/Teacher/${id}`);
         if (result.data) {
-            dispatch(doneSuccess(result.data));
+            dispatch(teacherSuccess(result.data));
         }
     } catch (error) {
         dispatch(getError(error));
@@ -40,10 +35,10 @@ export const updateTeachSubject = (teacherId, teachSubject) => async (dispatch) 
     dispatch(getRequest());
 
     try {
-        await axios.put(`${process.env.REACT_APP_BASE_URL}/TeacherSubject`, { teacherId, teachSubject }, {
+        await axios.put(`${apiBase}/TeacherSubject`, { teacherId, teachSubject }, {
             headers: { 'Content-Type': 'application/json' },
         });
-        dispatch(postDone());
+        dispatch(getSuccess("done"));
     } catch (error) {
         dispatch(getError(error));
     }

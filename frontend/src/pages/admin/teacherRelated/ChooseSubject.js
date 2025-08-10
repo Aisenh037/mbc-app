@@ -1,34 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
 import { Box, Table, TableBody, TableContainer, TableHead, Typography, Paper } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom';
-import { getTeacherFreeClassSubjects } from '../../../redux/sclassRelated/sclassHandle';
+import { getFreeSubjectList } from '../../../redux/sclassRelated/sclassHandle';
 import { updateTeachSubject } from '../../../redux/teacherRelated/teacherHandle';
 import { GreenButton, PurpleButton } from '../../../components/buttonStyles';
 import { StyledTableCell, StyledTableRow } from '../../../components/styles';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ChooseSubject = ({ situation }) => {
     const params = useParams();
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
+    const { currentUser } = useSelector((state) => state.user);
+    const { subjectsList, loading, error, response } = useSelector((state) => state.sclass);
+
     const [classID, setClassID] = useState("");
     const [teacherID, setTeacherID] = useState("");
     const [loader, setLoader] = useState(false)
 
-    const { subjectsList, loading, error, response } = useSelector((state) => state.sclass);
-
     useEffect(() => {
-        if (situation === "Norm") {
+        if (situation === "Class") {
+            setTeacherID(currentUser._id);
             setClassID(params.id);
             const classID = params.id
-            dispatch(getTeacherFreeClassSubjects(classID));
+            dispatch(getFreeSubjectList(classID));
         }
         else if (situation === "Teacher") {
             const { classID, teacherID } = params
             setClassID(classID);
             setTeacherID(teacherID);
-            dispatch(getTeacherFreeClassSubjects(classID));
+            dispatch(getFreeSubjectList(classID));
         }
     }, [situation]);
 

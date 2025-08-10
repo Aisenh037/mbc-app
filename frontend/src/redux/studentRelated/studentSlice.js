@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     studentsList: [],
+    userDetails: {},
     loading: false,
     error: null,
     response: null,
     statestatus: "idle",
+    statusCode: null,
 };
 
 const studentSlice = createSlice({
@@ -21,11 +23,32 @@ const studentSlice = createSlice({
             state.response = null;
             state.statestatus = "added";
         },
+        doneSuccess: (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.response = action.payload || null;
+            state.statestatus = "added";
+        },
         getSuccess: (state, action) => {
             state.studentsList = action.payload;
             state.loading = false;
             state.error = null;
             state.response = null;
+        },
+        detailsSuccess: (state, action) => {
+            state.userDetails = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        getStatus: (state, action) => {
+            state.response = action.payload || null;
+            state.loading = false;
+            state.error = null;
+        },
+        getStatusCode: (state, action) => {
+            state.statusCode = action.payload || null;
+            state.loading = false;
+            state.error = null;
         },
         getFailed: (state, action) => {
             state.response = action.payload;
@@ -52,6 +75,10 @@ export const {
     getError,
     underStudentControl,
     stuffDone,
+    doneSuccess,
+    detailsSuccess,
+    getStatus,
+    getStatusCode,
 } = studentSlice.actions;
 
 export const studentReducer = studentSlice.reducer;
