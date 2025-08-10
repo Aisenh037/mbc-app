@@ -10,21 +10,21 @@ const Homepage = () => {
         <StyledContainer>
             <Grid container spacing={0}>
                 <Grid item xs={12} md={6}>
-                    <img src={Students} alt="students" style={{ width: '100%' }} />
+                    <img src={Students} alt="mbc-portal" style={{ width: '100%' }} />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <StyledPaper elevation={3}>
                         <StyledTitle>
                             Welcome to
                             <br />
-                            School Management
+                            MBC Portal
                             <br />
-                            System
+                            NIT Bhopal
                         </StyledTitle>
                         <StyledText>
-                            Streamline school management, class organization, and add students and faculty.
-                            Seamlessly track attendance, assess performance, and provide feedback.
-                            Access records, view marks, and communicate effortlessly.
+                            Manage department academics, classes, students, and faculty.
+                            Track attendance, assessments, notices, and grievances in one place.
+                            Secure access for Admin, Teachers, and Students.
                         </StyledText>
                         <StyledBox>
                             <StyledLink to="/choose">

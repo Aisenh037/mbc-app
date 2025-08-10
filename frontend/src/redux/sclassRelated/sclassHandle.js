@@ -1,24 +1,15 @@
 import axios from 'axios';
-import {
-    getRequest,
-    getSuccess,
-    getFailed,
-    getError,
-    getStudentsSuccess,
-    detailsSuccess,
-    getFailedTwo,
-    getSubjectsSuccess,
-    getSubDetailsSuccess,
-    getSubDetailsRequest
-} from './sclassSlice';
+import { getRequest, getSuccess, getFailed, getError, getStudentsSuccess, getSclassDetailsSuccess, getSubjectsSuccess, getFreeSubjectListSuccess, getSubjectDetailsSuccess } from './sclassSlice';
+
+const apiBase = '/api';
 
 export const getAllSclasses = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}List/${id}`);
+        const result = await axios.get(`${apiBase}/${address}List/${id}`);
         if (result.data.message) {
-            dispatch(getFailedTwo(result.data.message));
+            dispatch(getFailed(result.data.message));
         } else {
             dispatch(getSuccess(result.data));
         }
@@ -27,13 +18,13 @@ export const getAllSclasses = (id, address) => async (dispatch) => {
     }
 }
 
-export const getClassStudents = (id) => async (dispatch) => {
+export const getSclassStudents = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/Sclass/Students/${id}`);
+        const result = await axios.get(`${apiBase}/Sclass/Students/${id}`);
         if (result.data.message) {
-            dispatch(getFailedTwo(result.data.message));
+            dispatch(getFailed(result.data.message));
         } else {
             dispatch(getStudentsSuccess(result.data));
         }
@@ -42,24 +33,24 @@ export const getClassStudents = (id) => async (dispatch) => {
     }
 }
 
-export const getClassDetails = (id, address) => async (dispatch) => {
+export const getSclassDetails = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`);
+        const result = await axios.get(`${apiBase}/${address}/${id}`);
         if (result.data) {
-            dispatch(detailsSuccess(result.data));
+            dispatch(getSclassDetailsSuccess(result.data));
         }
     } catch (error) {
         dispatch(getError(error));
     }
 }
 
-export const getSubjectList = (id, address) => async (dispatch) => {
+export const getAllSubjects = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`);
+        const result = await axios.get(`${apiBase}/${address}/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
@@ -70,15 +61,15 @@ export const getSubjectList = (id, address) => async (dispatch) => {
     }
 }
 
-export const getTeacherFreeClassSubjects = (id) => async (dispatch) => {
+export const getFreeSubjectList = (id) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/FreeSubjectList/${id}`);
+        const result = await axios.get(`${apiBase}/FreeSubjectList/${id}`);
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
-            dispatch(getSubjectsSuccess(result.data));
+            dispatch(getFreeSubjectListSuccess(result.data));
         }
     } catch (error) {
         dispatch(getError(error));
@@ -86,12 +77,12 @@ export const getTeacherFreeClassSubjects = (id) => async (dispatch) => {
 }
 
 export const getSubjectDetails = (id, address) => async (dispatch) => {
-    dispatch(getSubDetailsRequest());
+    dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`);
+        const result = await axios.get(`${apiBase}/${address}/${id}`);
         if (result.data) {
-            dispatch(getSubDetailsSuccess(result.data));
+            dispatch(getSubjectDetailsSuccess(result.data));
         }
     } catch (error) {
         dispatch(getError(error));

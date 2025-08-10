@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { getClassDetails, getClassStudents, getSubjectList } from "../../../redux/sclassRelated/sclassHandle";
+import { getSclassDetails, getSclassStudents, getAllSubjects } from "../../../redux/sclassRelated/sclassHandle";
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import {
     Box, Container, Typography, Tab, IconButton
@@ -28,9 +28,9 @@ const ClassDetails = () => {
     const classID = params.id
 
     useEffect(() => {
-        dispatch(getClassDetails(classID, "Sclass"));
-        dispatch(getSubjectList(classID, "ClassSubjects"))
-        dispatch(getClassStudents(classID));
+        dispatch(getSclassDetails(classID, "Sclass"));
+        dispatch(getAllSubjects(classID, "ClassSubjects"))
+        dispatch(getSclassStudents(classID));
     }, [dispatch, classID])
 
     if (error) {

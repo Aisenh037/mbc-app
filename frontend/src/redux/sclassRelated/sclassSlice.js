@@ -68,6 +68,23 @@ const sclassSlice = createSlice({
             state.subloading = false;
             state.error = null;
         },
+        // New action names mapped to existing reducers for compatibility
+        getSclassDetailsSuccess: (state, action) => {
+            state.sclassDetails = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        getFreeSubjectListSuccess: (state, action) => {
+            state.subjectsList = action.payload;
+            state.loading = false;
+            state.error = null;
+            state.response = null;
+        },
+        getSubjectDetailsSuccess: (state, action) => {
+            state.subjectDetails = action.payload;
+            state.subloading = false;
+            state.error = null;
+        },
         resetSubjects: (state) => {
             state.subjectsList = [];
             state.sclassesList = [];
@@ -86,7 +103,10 @@ export const {
     getFailedTwo,
     resetSubjects,
     getSubDetailsSuccess,
-    getSubDetailsRequest
+    getSubDetailsRequest,
+    getSclassDetailsSuccess,
+    getFreeSubjectListSuccess,
+    getSubjectDetailsSuccess,
 } = sclassSlice.actions;
 
 export const sclassReducer = sclassSlice.reducer;

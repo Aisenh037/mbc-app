@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getUserDetails, updateUser } from '../../../redux/userRelated/userHandle';
 import { useNavigate, useParams } from 'react-router-dom'
-import { getSubjectList } from '../../../redux/sclassRelated/sclassHandle';
+import { getAllSubjects } from '../../../redux/sclassRelated/sclassHandle';
 import { Box, Button, Collapse, IconButton, Table, TableBody, TableHead, Typography, Tab, Paper, BottomNavigation, BottomNavigationAction, Container } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { KeyboardArrowUp, KeyboardArrowDown, Delete as DeleteIcon } from '@mui/icons-material';
-import { removeStuff, updateStudentFields } from '../../../redux/studentRelated/studentHandle';
+import { removeStuff, updateStudentFields, clearStudentsAttendance } from '../../../redux/studentRelated/studentHandle';
 import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercentage, groupAttendanceBySubject } from '../../../components/attendanceCalculator';
 import CustomBarChart from '../../../components/CustomBarChart'
 import CustomPieChart from '../../../components/CustomPieChart'
@@ -37,7 +37,7 @@ const ViewStudent = () => {
 
     useEffect(() => {
         if (userDetails && userDetails.sclassName && userDetails.sclassName._id !== undefined) {
-            dispatch(getSubjectList(userDetails.sclassName._id, "ClassSubjects"));
+            dispatch(getAllSubjects(userDetails.sclassName._id, "ClassSubjects"));
         }
     }, [dispatch, userDetails]);
 
@@ -112,7 +112,7 @@ const ViewStudent = () => {
     }
 
     const removeHandler = (id, deladdress) => {
-        dispatch(removeStuff(id, deladdress))
+        dispatch(clearStudentsAttendance(id, deladdress))
             .then(() => {
                 dispatch(getUserDetails(studentID, address));
             })
